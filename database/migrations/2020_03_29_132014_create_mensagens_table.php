@@ -15,8 +15,8 @@ class CreateMensagensTable extends Migration
     {
         Schema::create('mensagens', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('mensagens', 280);
-            $table->char('cookieDelete', 10);
+            $table->string('mensagens', 280);
+            $table->string('cookieDelete', 10);
             $table->timestamps();
         });
     }
