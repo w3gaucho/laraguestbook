@@ -10,10 +10,15 @@ class MensagemController extends Controller
 {
     public function destroy($id, Request $request)
     {
-        $mensagem = Mensagem::findOrFail($id);
-        $mensagem->delete();
-        $request->session()->flash('success', 'Mensagem apagada com sucesso!');
-        return redirect('/');
+        $mensagem = Mensagem::where('id',$id)
+        ->where('cookieDelete',@$_COOKIE['cookieDelete'])
+        ->first();
+        if($mensagem){
+            $mensagem->delete();
+            return response()->json(true);
+        }else{
+            return response()->json(false);
+        }
     }
 
     public function index()
@@ -30,10 +35,10 @@ class MensagemController extends Controller
     }
 
     function random($limit=10){
-        $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
-        $randomStr = '';
-        for ($i = 0; $i < $limit; $i++) {
-            $randomStr .= $str[rand(0, mb_strlen($str)-1)];
+        $str='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
+        $randomStr='';
+        for($i=0;$i< $limit;$i++) {
+            $randomStr.=$str[rand(0, mb_strlen($str)-1)];
         }
         return $randomStr;
     }
@@ -59,9 +64,7 @@ class MensagemController extends Controller
         ], $mensagens);
 
         Mensagem::create($input)->id;
-
         $request->session()->flash('success', 'Mensagem enviada com sucesso!');
-
         return redirect('/');
     }
 

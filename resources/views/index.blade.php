@@ -3,18 +3,24 @@
 <head>
     <meta charset="utf-8">
     <title>{{$_ENV['APP_NAME']}}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <?php
     //https://laravel.com/docs/6.x/helpers#paths
     $cssFile='/css/master.css';
     $filename=public_path().$cssFile;
     $cssUrl=asset($cssFile).'?'.md5_file($filename);
     ?><link rel="stylesheet" href="<?php print $cssUrl; ?>">
+    <script type="text/javascript" src="{{asset('/js/jquery.min.js')}}"></script>
+    <?php
+    $jsFile='/js/main.js';
+    $filename=public_path().$jsFile;
+    $jsUrl=asset($jsFile).'?'.md5_file($filename);
+    ?><script type="text/javascript" src="<?php print $jsUrl; ?>"></script>
 </head>
 <body>
     <div class="c">
         <div class="r">
             <div class="g3">
-
             </div><!-- g3 -->
             <div class="g6">
                 <div class="center">
@@ -53,15 +59,19 @@
                 <?php
                 if(isset($mensagens) && count($mensagens)>0){
                     foreach ($mensagens as $mensagem) {
+                        print '<div id="msg'.$mensagem->id.'">';
                         print '<p><small>';
                         print $mensagem->created_at;
                         print '</small>';
-                        $href='javascript:delete('.$mensagem->id.');';
+                        $onclk='javascript:deleteMsg('.$mensagem->id.');';
                         if(getenv('cookieDelete')==$mensagem->cookieDelete){
-                            print '<a class="right" href="'.$href.'">X</a>';
+                            print '<a class="right" href="javascript:void(0);';
+                            print '" onclick="'.$onclk.'">';
+                            print 'X</a>';
                         }
                         print '</p>';
                         print '<p>'.$mensagem->mensagem.'</p><hr>';
+                        print '</div>';
                     }
                 }else{
                     print 'Nenhuma mensagem encontrada';
