@@ -12,7 +12,7 @@ class MensagemController extends Controller
     {
         $mensagem = Mensagem::findOrFail($id);
         $mensagem->delete();
-        $request->session()->flash('alert-success', 'Mensagem apagada com sucesso!');
+        $request->session()->flash('success', 'Mensagem apagada com sucesso!');
         return redirect('/');
     }
 
@@ -50,17 +50,17 @@ class MensagemController extends Controller
 
         $mensagens = [
             'cookieDelete'=>'Cookie inválido',
-            'mensagem.required' => 'Digite uma mensagem.',
+            'mensagem.required' => 'Digite uma mensagem',
         ];
 
         $this->validate($request,[
             'cookieDelete'=>'required|min:10|max:10',
-            'mensagem' => 'required|max:280'
+            'mensagem' => 'required|min:1|max:280'
         ], $mensagens);
 
         Mensagem::create($input)->id;
 
-        $request->session()->flash('alert-success', 'Mensagem enviada com sucesso!');
+        $request->session()->flash('success', 'Mensagem enviada com sucesso!');
 
         return redirect('/');
     }

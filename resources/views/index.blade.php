@@ -18,6 +18,28 @@
             </div><!-- g3 -->
             <div class="g6 center">
                 <h1>{{$_ENV['APP_NAME']}}</h1>
+                <?php
+                if(Session::has('success')){
+                    print '<p>';
+                    print Session::get('success');
+                    print '</p>';
+                }
+                $countErrors=count($errors);
+                if($countErrors>0){
+                    if($countErrors==1){
+                        print '<p><b>Erro:</b> ';
+                        print $errors->all()[0];
+                        print '</p>';
+                    }else{
+                        print '<p><b>Erros:</b></p>';
+                        print '<ul>';
+                        foreach ($errors->all() as $erro) {
+                            print '<li>'.$erro.'</li>';
+                        }
+                        print '</ul>';
+                    }
+                }
+                ?>
                 <form class="" action="{{url('/mensagens')}}" method="post">
                     <textarea name="mensagem" rows="4" maxlength="280"></textarea>
                     {{ csrf_field() }}
