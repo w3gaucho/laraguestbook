@@ -8,7 +8,7 @@ class Mensagem extends Model
 {
     protected $table = 'mensagens';
 
-    protected $fillable = ['mensagem'];
+    protected $fillable = ['cookieDelete','mensagem'];
 
     protected $dates = ['created_at', 'updated_at'];
 }
