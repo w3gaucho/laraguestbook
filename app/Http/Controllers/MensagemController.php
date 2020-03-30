@@ -19,12 +19,12 @@ class MensagemController extends Controller
     public function index()
     {
         $mensagens = Mensagem::orderBy('created_at','desc')->get();
-        $cookieDeleteValue=$this->random();
+        $cookieValue=$this->random();
         if(isset($_COOKIE['cookieDelete'])){
-            putenv('cookieDelete='.$cookieDeleteValue);
+            putenv('cookieDelete='.$_COOKIE['cookieDelete']);
         }else{
-            setcookie('cookieDelete',$cookieDeleteValue);
-            putenv($cookieDeleteValue);
+            setcookie('cookieDelete',$cookieValue);
+            putenv('cookieDelete='.$cookieValue);
         }
         return view('index', compact('mensagens'));
     }

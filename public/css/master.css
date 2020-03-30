@@ -173,3 +173,8 @@ textarea{
         width: auto;
     }
 }
+/* LaraGuestbook */
+.right{
+    display: block;
+    float:right;
+}
